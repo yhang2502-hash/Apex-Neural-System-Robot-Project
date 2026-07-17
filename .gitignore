@@ -1,0 +1,15 @@
+# Private credentials
+**/.env
+**/include/secrets.h
+
+# PlatformIO generated files
+**/.pio/
+
+# Node.js dependencies
+**/node_modules/
+
+# VS Code generated settings
+**/.vscode/
+
+# Logs
+*.log

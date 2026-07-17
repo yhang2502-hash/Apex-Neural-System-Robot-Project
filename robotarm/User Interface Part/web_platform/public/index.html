@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Service Robot Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(44, 28, 18, 0.55), rgba(44, 28, 18, 0.65)),
+        radial-gradient(circle at top left, #f8d7a3, #7a3f24 45%, #2b1a13 100%);
+      color: #fff7ed;
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      background: rgba(255, 248, 235, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+      margin-bottom: 22px;
+    }
+
+    .hero-title h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+      letter-spacing: 0.4px;
+    }
+
+    .hero-title p {
+      color: #ffe6c9;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .status-pill {
+      min-width: 160px;
+      text-align: center;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: #2f7d4f;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+      font-weight: 700;
+    }
+
+    .status-pill span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(255, 248, 235, 0.94);
+      color: #3b2417;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .card h2 {
+      font-size: 24px;
+      margin-bottom: 14px;
+      color: #4a2617;
+    }
+
+    .card-subtitle {
+      color: #7a5b45;
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .status-item {
+      background: #fff5e8;
+      border-left: 6px solid #c65f35;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .status-label {
+      font-size: 13px;
+      color: #8a6045;
+      margin-bottom: 6px;
+    }
+
+    .status-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: #3b2417;
+    }
+
+    .control-section {
+      margin-top: 20px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      color: #4a2617;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 15px 16px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.18s ease;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-ready {
+      background: #2f7d4f;
+      color: white;
+    }
+
+    .btn-status {
+      background: #f0c078;
+      color: #3b2417;
+    }
+
+    .btn-sequence {
+      background: #d97732;
+      color: white;
+    }
+
+    .btn-service {
+      background: #8b5a2b;
+      color: white;
+    }
+
+    .btn-home {
+      background: #7b6f63;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #c0392b;
+      color: white;
+    }
+
+    .btn-auto-on {
+      background: #2f7d4f;
+      color: white;
+    }
+
+    .btn-auto-off {
+      background: #a94438;
+      color: white;
+    }
+
+    .btn-wide {
+      grid-column: span 2;
+    }
+
+    .robot-visual {
+      background: linear-gradient(160deg, #fff3df, #f3c98b);
+      border-radius: 22px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 16px;
+      border: 1px solid #f0d2aa;
+    }
+
+    .robot-icon {
+      font-size: 72px;
+      margin-bottom: 10px;
+    }
+
+    .robot-visual h3 {
+      color: #4a2617;
+      margin-bottom: 8px;
+    }
+
+    .robot-visual p {
+      color: #7a5b45;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .log-card {
+      margin-top: 22px;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .refresh-btn {
+      background: #4a2617;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 999px;
+      box-shadow: none;
+    }
+
+    #log {
+      width: 100%;
+      height: 260px;
+      overflow: auto;
+      white-space: pre-wrap;
+      background: #1f2d1f;
+      color: #d7ff9c;
+      border-radius: 20px;
+      padding: 20px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.45;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hint {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #7a5b45;
+      line-height: 1.5;
+      background: #fff5e8;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .hint strong {
+      color: #4a2617;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .status-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-wide {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-title">
+        <h1>🍽️ Restaurant Service Robot</h1>
+        <p>
+          Smart waiter-bot dashboard for controlling the ESP32 robot arm,
+          tray sequence, HuskyLens AprilTag recognition, home position and emergency stop.
+        </p>
+      </div>
+
+      <div class="status-pill">
+        <span>Backend Status</span>
+        <div id="serverStatus">Checking...</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <!-- LEFT CARD -->
+      <div class="card">
+        <h2>Robot Arm Control Panel</h2>
+        <p class="card-subtitle">
+          Control the restaurant service robot arm using real working commands.
+          Each button sends a command to Favoriot, then ESP32 reads the command and executes the action.
+        </p>
+
+        <div class="control-section">
+          <div class="section-title">🟢 Robot Preparation</div>
+          <div class="btn-grid">
+            <button class="btn-ready" data-cmd="READY">Ready Robot</button>
+            <button class="btn-status" data-cmd="STATUS">Check Status</button>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <div class="section-title">🍱 Manual Tray / Block Sequence</div>
+          <div class="btn-grid">
+            <button class="btn-sequence" data-cmd="BLUE">Tag ID1 / Blue Sequence</button>
+            <button class="btn-sequence" data-cmd="RED">Tag ID2 / Red Sequence</button>
+            <button class="btn-sequence btn-wide" data-cmd="YELLOW">Tag ID3 / Yellow Sequence</button>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <div class="section-title">🏷️ HuskyLens Tag Recognition</div>
+          <div class="btn-grid">
+            <button class="btn-service" data-cmd="AUTO_SORT">Manual Tag Scan</button>
+            <button class="btn-service" data-cmd="READ_TAG">Read Tag Only</button>
+            <button class="btn-auto-on" data-cmd="AUTO_TAG_ON">Auto Tag ON</button>
+            <button class="btn-auto-off" data-cmd="AUTO_TAG_OFF">Auto Tag OFF</button>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <div class="section-title">🏠 Position Control</div>
+          <div class="btn-grid">
+            <button class="btn-home" data-cmd="SAFE_UP">Safe Up</button>
+            <button class="btn-home" data-cmd="HOME">Home Position</button>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <div class="section-title">🚨 Safety</div>
+          <div class="btn-grid">
+            <button class="btn-danger btn-wide" data-cmd="STOP">Emergency Stop</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT CARD -->
+      <div class="card">
+        <h2>Robot Mission</h2>
+        <p class="card-subtitle">
+          Mission: support restaurant tray handling using a robot arm, HuskyLens AprilTag recognition,
+          and Favoriot cloud-based control.
+        </p>
+
+        <div class="status-grid">
+          <div class="status-item">
+            <div class="status-label">Current Mode</div>
+            <div class="status-value">Waiter-Bot</div>
+          </div>
+
+          <div class="status-item">
+            <div class="status-label">Robot Area</div>
+            <div class="status-value">Kitchen</div>
+          </div>
+
+          <div class="status-item">
+            <div class="status-label">Control Path</div>
+            <div class="status-value">UI → Favoriot</div>
+          </div>
+
+          <div class="status-item">
+            <div class="status-label">Robot Arm</div>
+            <div class="status-value">ESP32</div>
+          </div>
+        </div>
+
+        <div class="robot-visual">
+          <div class="robot-icon">🤖🏷️</div>
+          <h3>Restaurant Waiter-Bot Prototype</h3>
+          <p>
+            The dashboard sends commands to the backend server, then to Favoriot.
+            ESP32 reads the latest command from Favoriot and runs the selected robot arm action.
+            HuskyLens reads AprilTag ID1, ID2, or ID3 to choose the correct sequence.
+          </p>
+        </div>
+
+        <div class="hint">
+          <strong>Command mapping:</strong><br>
+          Ready Robot → READY, prepares robot and moves to HOME<br>
+          Check Status → STATUS, prints robot status in Serial Monitor<br>
+          Tag ID1 / Blue Sequence → BLUE robot arm sequence<br>
+          Tag ID2 / Red Sequence → RED robot arm sequence<br>
+          Tag ID3 / Yellow Sequence → YELLOW robot arm sequence<br>
+          Manual Tag Scan → AUTO_SORT, HuskyLens detects one tag and runs the correct sequence<br>
+          Read Tag Only → READ_TAG, HuskyLens reads tag ID only, no movement<br>
+          Auto Tag ON → AUTO_TAG_ON, robot watches tag arrival automatically<br>
+          Auto Tag OFF → AUTO_TAG_OFF, stops automatic tag watching<br>
+          Safe Up → lifts the robot arm to a safer raised pose<br>
+          Home Position → returns robot arm to home pose<br>
+          Emergency Stop → STOP, locks robot movement for safety
+        </div>
+      </div>
+    </section>
+
+    <section class="card log-card">
+      <div class="log-header">
+        <div>
+          <h2>Command Log</h2>
+          <p class="card-subtitle">
+            Shows backend response, Favoriot response, and command history.
+          </p>
+        </div>
+
+        <button id="refreshHistory" class="refresh-btn">Refresh</button>
+      </div>
+
+      <pre id="log">Ready.</pre>
+    </section>
+  </main>
+
+  <!-- Make sure your JS file is inside public/app.js -->
+  <script src="./app.js"></script>
+</body>
+
+</html>
