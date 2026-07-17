@@ -153,7 +153,7 @@ Apex-Neural-System-Robot-Project/
 
 ## Presentation Slides
 
-[View the project presentation slides](docs/Apex-Neural-System-Robot-Project-Presentation.pdf)
+[View the project presentation slides](assets/Apex-Neural-System-Robot-Project-Presentation.pdf)
 
 ---
 
